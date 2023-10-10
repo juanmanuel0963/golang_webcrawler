@@ -49,12 +49,12 @@ Replace <starting_url> with the URL from which you want to start crawling, and <
 The crawler will start and display the progress, including the tree structure of the sitemap and the JSON representation of the sitemap.
 
 
-2. **JSON Sitemap**
+3. **JSON Sitemap**
 
 The JSON data will be saved to a file in the "sitemaps" subfolder with a timestamp in the filename.
 You can find the sitemap files in the "sitemaps" subfolder.
 
-2. **Error Logging**
+4. **Error Logging**
 
 Any errors encountered during crawling will be logged and saved in the "logs" subfolder.
 You can review the error logs in the "logs" subfolder for troubleshooting.
@@ -83,7 +83,7 @@ Run godoc with the following command:
 
 godoc -http :6060
 
-2. **View Documentation**
+3. **View Documentation**
 
 Open your web browser and navigate to http://localhost:6060/pkg/webcrawler/ to view the documentation.
 
