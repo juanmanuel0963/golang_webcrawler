@@ -44,6 +44,21 @@ go run webcrawler.go <starting_url> <deep_level_to_retrieve>
 
 Replace <starting_url> with the URL from which you want to start crawling, and <deep_level_to_retrieve> with the maximum depth level you want to retrieve.
 
+2. **View the Progress**
+
+The crawler will start and display the progress, including the tree structure of the sitemap and the JSON representation of the sitemap.
+
+
+2. **JSON Sitemap**
+
+The JSON data will be saved to a file in the "sitemaps" subfolder with a timestamp in the filename.
+You can find the sitemap files in the "sitemaps" subfolder.
+
+2. **Error Logging**
+
+Any errors encountered during crawling will be logged and saved in the "logs" subfolder.
+You can review the error logs in the "logs" subfolder for troubleshooting.
+
 ## Example
 
 Here's an example of how to use the web crawler:
