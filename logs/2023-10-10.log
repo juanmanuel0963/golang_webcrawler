@@ -1,0 +1,2 @@
+ERROR: 2023/10/10 11:51:59 logger.go:36: 2023-10-10 11:51:59 - Domain: https://parserdigital.com Message: Error saving JSON to file. Error: myerror
+ERROR: 2023/10/10 12:00:30 logger.go:36: 2023-10-10 12:00:30 - Domain: https://parserdigital.com Message: Error fetching https://parserdigital.com/careers-career-opportunities Status Code 404 Error: %!s(<nil>)

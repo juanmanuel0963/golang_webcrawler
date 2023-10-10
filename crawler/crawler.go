@@ -3,10 +3,10 @@ package crawler
 import (
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"strings"
 	"sync"
+	"webcrawler/logger"
 	"webcrawler/trees"
 
 	"golang.org/x/net/html"
@@ -89,9 +89,12 @@ func Crawl(parentURL string) map[string]bool {
 	//Get the content of the remote URL
 	response, err := http.Get(parentURL)
 
-	//Error getching the URL
+	//Error fetching the URL
 	if err != nil {
-		fmt.Printf("\nError fetching %s: %v\n", parentURL, err)
+		fmt.Printf("Error fetching %s: %v\n", parentURL, err)
+		errMsg := fmt.Sprintf("Domain: %s Message: %s Error: %s", BaseDomain, "Error fetching "+parentURL, err)
+		logger.LogError(errMsg)
+
 		return foundLinks
 	}
 
@@ -100,7 +103,10 @@ func Crawl(parentURL string) map[string]bool {
 
 	//URL invocation not successfull
 	if response.StatusCode != http.StatusOK {
-		fmt.Printf("\nError fetching %s: Status Code %d\n", parentURL, response.StatusCode)
+		fmt.Printf("Error fetching %s: Status Code %d\n", parentURL, response.StatusCode)
+		errMsg := fmt.Sprintf("Domain: %s Message: %s Error: %s", BaseDomain, "Error fetching "+parentURL+" Status Code "+fmt.Sprint(response.StatusCode), err)
+		logger.LogError(errMsg)
+
 		return foundLinks
 	}
 
@@ -128,7 +134,8 @@ func Crawl(parentURL string) map[string]bool {
 				return foundLinks
 			}
 
-			log.Fatalf("error tokenizing HTML: %v", tokenizer.Err())
+			errMsg := fmt.Sprintf("Domain: %s Message: %s Error: %s", BaseDomain, "Error tokenizing HTML ", tokenizer.Err())
+			logger.LogError(errMsg)
 		//Start tag token
 		case html.StartTagToken, html.SelfClosingTagToken:
 

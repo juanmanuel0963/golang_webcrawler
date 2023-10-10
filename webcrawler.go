@@ -8,6 +8,7 @@ import (
 	"time"
 	"webcrawler/crawler"
 	"webcrawler/file_processing"
+	"webcrawler/logger"
 	"webcrawler/trees"
 	"webcrawler/utils"
 )
@@ -68,7 +69,8 @@ func main() {
 	//Convert the tree to JSON
 	jsonData, err := trees.ConvertTreeToJson(root)
 	if err != nil {
-		fmt.Printf("\nError converting tree to JSON: %v\n", err)
+		errMsg := fmt.Sprintf("Domain: %s Message: %s Error: %s", crawler.BaseDomain, "Error converting tree to JSON.", err)
+		logger.LogError(errMsg)
 		return
 	}
 
@@ -81,11 +83,13 @@ func main() {
 	// Save JSON data to a file with a timestamp in the filename.
 	err = file_processing.SaveJSONToFileWithTimestamp(jsonData, domain)
 	if err != nil {
-		fmt.Printf("\nError saving JSON to file: %v\n", err)
+		errMsg := fmt.Sprintf("Domain: %s Message: %s Error: %s", crawler.BaseDomain, "Error saving JSON to file.", err)
+		logger.LogError(errMsg)
 		return
 	}
 
 	//Finish the timer
 	elapsed := time.Since(startTime)
 	fmt.Printf("\nTotal time taken: %s\n", elapsed)
+
 }
