@@ -5,7 +5,6 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"os"
 	"strings"
 	"sync"
 	"webcrawler/trees"
@@ -25,32 +24,21 @@ var BaseDomain = ""
 // Var to control the visited pages
 var CrawledPages Pages
 
-// Function to get the base domain of a given url
-func GetBaseDomain(url string) string {
-	parts := strings.Split(url, "/")
-	if len(parts) < 3 {
-		fmt.Println("Invalid URL")
-		os.Exit(1)
-	}
-	return parts[0] + "//" + parts[2]
-}
-
-// Go routine for crawling recursively an URL
-func RecursiveCrawl(parentURL string, level int, parent int, doneChan chan string, parentNode *trees.TreeNode, wg *sync.WaitGroup) {
-
+// Go routine for crawling recursively an URL.
+// The sitemap is stored in the "parentNode" object as a tree with head nodes and sons
+func RecursiveCrawl(parentURL string, currentLevel int, maxLevel int, parent int, doneChan chan string, parentNode *trees.TreeNode, wg *sync.WaitGroup) {
 	//Defers the closing of the parent channel
 	defer func() {
 		doneChan <- parentURL
 	}()
 
-	if level < 2 {
+	if currentLevel < maxLevel {
 
-		//Find the list of links in the URL
+		//Retrieve the list of links in the URL and save them in a map
 		foundLinks := Crawl(parentURL)
 
-		//Print the current level and parents iterating
-		fmt.Printf("\nLevel:%v, Parent: %v, %s, \n", level, parent, parentURL)
-
+		//Print the current level and parent URL
+		fmt.Printf("\nLevel:%v, Parent: %v, %s", currentLevel, parent, parentURL)
 		//Counter of links found
 		counter := 0
 
@@ -62,21 +50,21 @@ func RecursiveCrawl(parentURL string, level int, parent int, doneChan chan strin
 
 			//fmt.Printf("Son %v: %s\n", counter, sonURL)
 
-			// Increment the wait group count
-			wg.Add(1)
-
 			// Create son node
 			sonNode := &trees.TreeNode{Name: sonURL}
 
 			// Add child node to parent
 			parentNode.Children = append(parentNode.Children, sonNode)
 
+			// Increment the wait group count as we are invoquing a new goroutine
+			wg.Add(1)
+
 			//Call Go routine for crawling recursively the son URL
-			go RecursiveCrawl(sonURL, level+1, counter, doneChan, sonNode, wg)
+			go RecursiveCrawl(sonURL, currentLevel+1, maxLevel, counter, doneChan, sonNode, wg)
 		}
 	}
 
-	// Decrement the parent wait group count
+	// Decrement the wait group count
 	wg.Done()
 }
 
@@ -103,7 +91,7 @@ func Crawl(parentURL string) map[string]bool {
 
 	//Error getching the URL
 	if err != nil {
-		fmt.Printf("Error fetching %s: %v\n", parentURL, err)
+		fmt.Printf("\nError fetching %s: %v\n", parentURL, err)
 		return foundLinks
 	}
 
@@ -112,7 +100,7 @@ func Crawl(parentURL string) map[string]bool {
 
 	//URL invocation not successfull
 	if response.StatusCode != http.StatusOK {
-		fmt.Printf("Error fetching %s: Status Code %d\n", parentURL, response.StatusCode)
+		fmt.Printf("\nError fetching %s: Status Code %d\n", parentURL, response.StatusCode)
 		return foundLinks
 	}
 
