@@ -9,7 +9,7 @@ import (
 )
 
 // Saves JSON data to a file with a timestamp in the filename.
-func SaveJSONToFileWithTimestamp(jsonData []byte, prefix string) error {
+func SaveJSONToFileWithTimestamp(jsonData []byte, prefix string) (string, error) {
 	// Create the "sitemaps" subfolder if it doesn't exist
 	sitemapsFolder := "sitemaps"
 	if _, err := os.Stat(sitemapsFolder); os.IsNotExist(err) {
@@ -27,7 +27,7 @@ func SaveJSONToFileWithTimestamp(jsonData []byte, prefix string) error {
 	if err != nil {
 		errMsg := fmt.Sprintf("Domain: %s Message: %s Error: %s", crawler.BaseDomain, "Error opening the file", filename)
 		logger.LogError(errMsg)
-		return err
+		return filename, err
 	}
 	defer file.Close()
 
@@ -36,9 +36,9 @@ func SaveJSONToFileWithTimestamp(jsonData []byte, prefix string) error {
 	if err != nil {
 		errMsg := fmt.Sprintf("Domain: %s Message: %s Error: %s", crawler.BaseDomain, "Error writing to the file", filename)
 		logger.LogError(errMsg)
-		return err
+		return filename, err
 	}
 	fmt.Printf("\nJSON data saved to %s\n", filename)
 
-	return nil
+	return filename, nil
 }

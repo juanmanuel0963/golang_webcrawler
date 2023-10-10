@@ -81,7 +81,7 @@ func main() {
 	domain := utils.GetShortDomain(startingURL)
 
 	// Save JSON data to a file with a timestamp in the filename.
-	err = file_processing.SaveJSONToFileWithTimestamp(jsonData, domain)
+	_, err = file_processing.SaveJSONToFileWithTimestamp(jsonData, domain)
 	if err != nil {
 		errMsg := fmt.Sprintf("Domain: %s Message: %s Error: %s", crawler.BaseDomain, "Error saving JSON to file.", err)
 		logger.LogError(errMsg)
