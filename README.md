@@ -89,7 +89,7 @@ Open your web browser and navigate to http://localhost:6060/pkg/webcrawler/ to v
 
 ## Author
 
-Juan Diaz
+<a href="https://www.linkedin.com/in/juanmanuel0963/" target="_blank">Juan Diaz</a>
 
 Feel free to use and modify this code for your own purposes.
 
