@@ -38,7 +38,7 @@ func RecursiveCrawl(parentURL string, currentLevel int, maxLevel int, parent int
 		foundLinks := Crawl(parentURL)
 
 		//Print the current level and parent URL
-		fmt.Printf("\nLevel:%v, Parent: %v, %s", currentLevel, parent, parentURL)
+		fmt.Printf("\n\nLevel:%v, Parent: %v, %s", currentLevel, parent, parentURL)
 		//Counter of links found
 		counter := 0
 
@@ -48,7 +48,7 @@ func RecursiveCrawl(parentURL string, currentLevel int, maxLevel int, parent int
 			//Increase the number of links found
 			counter++
 
-			//fmt.Printf("Son %v: %s\n", counter, sonURL)
+			fmt.Printf("\nSon %v: %s", counter, sonURL)
 
 			// Create son node
 			sonNode := &trees.TreeNode{Name: sonURL}
