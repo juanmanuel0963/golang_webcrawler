@@ -1,3 +1,4 @@
+// Package for crawling URLs and retrieve the list of links as a sitemap format
 package crawler
 
 import (

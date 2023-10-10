@@ -1,3 +1,4 @@
+// crawler test
 package crawler
 
 import (
@@ -6,6 +7,7 @@ import (
 	"webcrawler/utils"
 )
 
+// TestCrawl Documentation
 func TestCrawl(t *testing.T) {
 	tests := []struct {
 		inputURL    string

@@ -1,3 +1,4 @@
+// Package for general purpose utilities
 package utils
 
 import (

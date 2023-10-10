@@ -1,3 +1,4 @@
+// Package for logging error messages on external files
 package logger
 
 import (
@@ -7,6 +8,7 @@ import (
 	"time"
 )
 
+// Save error messages to a log file
 func LogError(errorMessage string) {
 	// Create a "logs" subfolder if it doesn't exist
 	logsFolder := "logs"

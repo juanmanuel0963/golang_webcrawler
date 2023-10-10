@@ -1,3 +1,4 @@
+// Package for saving a sitemap as a tree structure
 package trees
 
 import (

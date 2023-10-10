@@ -13,6 +13,7 @@ import (
 	"webcrawler/utils"
 )
 
+// Application for retrieviwing the sitemap from a given URL.
 func main() {
 
 	//Read the input characters

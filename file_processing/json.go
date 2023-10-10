@@ -1,3 +1,4 @@
+// Package for files manipulation
 package file_processing
 
 import (
